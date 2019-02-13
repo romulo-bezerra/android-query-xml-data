@@ -36,7 +36,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:paddingLeft="10dp"
             android:text="Notícias do Sertão da Paraíba"
             android:textColor="@color/colorAccent"
             android:textSize="18sp"
@@ -45,7 +44,7 @@
         <ListView
             android:id="@+id/lvNoticias"
             android:layout_width="match_parent"
-            android:layout_height="401dp"
+            android:layout_height="424dp"
             android:paddingTop="5dp" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

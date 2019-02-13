@@ -1,10 +1,11 @@
 package br.edu.ifpb.queryxmldata.valueObjects;
 
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
 
-public class Message {
+public class Message implements Serializable {
 
     private String title;
     private URL link;

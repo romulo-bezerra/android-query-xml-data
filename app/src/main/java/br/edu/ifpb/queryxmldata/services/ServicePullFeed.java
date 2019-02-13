@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class ServicePullFeed extends IntentService {
         XmlPullFeedParser xmlPullFeedParser = new XmlPullFeedParser(URL_FEEDRSS_DIARIODOSERTAO);
         messages = xmlPullFeedParser.parse();
 
-        intent.putExtra("messages", messages.toString());
+        intent.putExtra("messages", (Serializable) messages);
 
         LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
         manager.sendBroadcast(intent);
