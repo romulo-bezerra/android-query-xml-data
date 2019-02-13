@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private Intent intent;
 
     private boolean isInitialInstant;
-    private ArrayList<Message> messagesComparables = new ArrayList<>();
+    private ArrayList<Message> messagesComparables;
     private ArrayList<Message> responseReceiver;
 
     final Handler handler = new Handler();
@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
         intent = new Intent(this, ServicePullFeed.class);
         intent.setAction("INTENT_PULLFEED");
         isInitialInstant = true;
+        messagesComparables =  new ArrayList<>();
+        responseReceiver =  new ArrayList<>();
     }
 
     public void startTimer() {
