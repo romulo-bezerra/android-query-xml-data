@@ -37,6 +37,8 @@ public class XmlPullFeedParser extends BaseFeedParser {
                         } else if (currentMessage != null){
                             if (name.equalsIgnoreCase(LINK)){
                                 currentMessage.setLink(parser.getAttributeValue(null, "href"));
+                            } else if (name.equalsIgnoreCase(UPDATE_DATA)) {
+                                currentMessage.setData(parser.nextText());
                             } else if (name.equalsIgnoreCase(TITLE)){
                                 currentMessage.setTitle(parser.nextText());
                             }

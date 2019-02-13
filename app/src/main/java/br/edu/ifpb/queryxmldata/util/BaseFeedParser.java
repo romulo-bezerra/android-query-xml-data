@@ -14,6 +14,7 @@ public abstract class BaseFeedParser implements FeedParser {
     // names of the XML tags
     static final  String TITLE = "title";
     static final String LINK = "link";
+    static final String UPDATE_DATA = "updated";
     static final  String ENTRY = "entry";
 
     final URL feedUrl;

@@ -26,9 +26,10 @@
             android:layout_height="35dp"
             android:layout_marginTop="5dp"
             android:background="@color/colorAccent"
-            android:gravity="center_vertical|center_horizontal"
+            android:gravity="center_horizontal"
             android:text="Diário do Sertão"
             android:textColor="@android:color/background_light"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
@@ -37,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Notícias do Sertão da Paraíba"
-            android:textColor="@color/colorAccent"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
 

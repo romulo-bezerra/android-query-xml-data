@@ -30,9 +30,11 @@ public class LinhaScreenNewsAdapter extends ArrayAdapter<Message> {
 
         TextView titulo = rowView.findViewById(R.id.tvTitulo);
         TextView link = rowView.findViewById(R.id.tvLink);
+        TextView dataHora = rowView.findViewById(R.id.tvDataHora);
 
         titulo.setText(elementos.get(position).getTitle());
         link.setText(elementos.get(position).getLink().toString());
+        dataHora.setText(elementos.get(position).getData().toString());
 
         return rowView;
     }
