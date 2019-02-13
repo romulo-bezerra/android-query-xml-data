@@ -8,25 +8,30 @@ import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import br.edu.ifpb.queryxmldata.R;
 import br.edu.ifpb.queryxmldata.adapters.LinhaScreenNewsAdapter;
+import br.edu.ifpb.queryxmldata.util.NotificationUtil;
 import br.edu.ifpb.queryxmldata.services.ServicePullFeed;
 import br.edu.ifpb.queryxmldata.valueObjects.Message;
 
 public class MainActivity extends AppCompatActivity {
 
-    Timer timer;
-    TimerTask timerTask;
+    private Timer timer;
+    private TimerTask timerTask;
+
+    private Intent intent;
+
+    private boolean isInitialInstant;
 
     final Handler handler = new Handler();
 
@@ -38,6 +43,14 @@ public class MainActivity extends AppCompatActivity {
             ListView listView = findViewById(R.id.lvNoticias);
             ArrayAdapter adapter = new LinhaScreenNewsAdapter(context, responseReceiver);
             listView.setAdapter(adapter);
+
+            if (isInitialInstant) {
+                isInitialInstant = false;
+            }else {
+                // Cria uma notificação para alertar que a lista de notícias foi atualizada
+                NotificationUtil.create(context, 1, intent, R.mipmap.ic_launcher,
+                    "Notícias atualizadas", "A lista de notícias foi atualizada!");
+            }
         }
     };
 
@@ -46,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(brPullFeed, new IntentFilter("INTENT_PULLFEED"));
+        intent = new Intent(this, ServicePullFeed.class);
+        intent.setAction("INTENT_PULLFEED");
+        isInitialInstant = true;
     }
 
     public void startTimer() {
@@ -56,27 +71,16 @@ public class MainActivity extends AppCompatActivity {
         //initialize the TimerTask's job
         initializeTimerTask();
 
-        //schedule the timer, after the first 5000ms the TimerTask will run every 10000ms
-        timer.schedule(timerTask, 5000, 10000); //
+        //schedule the timer, after the first 0ms the TimerTask will run every 5m
+        timer.schedule(timerTask, 0, 300000); //
     }
 
     public void initializeTimerTask() {
-
         timerTask = new TimerTask() {
             public void run() {
-
-                //use a handler to run a toast that shows the current timestamp
                 handler.post(new Runnable() {
                     public void run() {
-                        //get the current timeStamp
-                        Calendar calendar = Calendar.getInstance();
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd:MMMM:yyyy HH:mm:ss a");
-                        final String strDate = simpleDateFormat.format(calendar.getTime());
-
-                        //show the toast
-                        int duration = Toast.LENGTH_SHORT;
-                        Toast toast = Toast.makeText(getApplicationContext(), strDate, duration);
-                        toast.show();
+                        startService(intent);
                     }
                 });
             }
@@ -86,15 +90,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart(){
         super.onStart();
-        Intent intent = new Intent(this, ServicePullFeed.class);
-        intent.setAction("INTENT_PULLFEED");
-        startService(intent);
+        startTimer();
     }
 
     @Override
     public void onResume(){
         super.onResume();
-        startTimer();
+        LocalBroadcastManager.getInstance(this).registerReceiver(brPullFeed, new IntentFilter("INTENT_PULLFEED"));
     }
 
     @Override

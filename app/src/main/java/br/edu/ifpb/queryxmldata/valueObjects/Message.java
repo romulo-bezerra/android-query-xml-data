@@ -9,6 +9,7 @@ public class Message implements Serializable {
 
     private String title;
     private URL link;
+    private String data;
 
     public Message(){}
 
