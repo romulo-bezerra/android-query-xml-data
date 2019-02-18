@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     // Cria uma notificação para alertar que a lista de notícias foi atualizada
                     NotificationUtil.create(context, 1, intent, R.mipmap.ic_launcher, "Notícias atualizadas", "A lista de notícias foi atualizada!");
                 }
+                messagesComparables = responseReceiver;
             }
         }
     };
